@@ -93,7 +93,7 @@ if (isset($_POST['login'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Molla - Bootstrap eCommerce Template</title>
+    <title>Thrift Fashion - Login / Register</title>
     <meta name="keywords" content="HTML5 Template">
     <meta name="description" content="Molla - Bootstrap eCommerce Template">
     <meta name="author" content="p-themes">
@@ -114,6 +114,7 @@ if (isset($_POST['login'])) {
     <!-- Main CSS File -->
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/skins/skin-demo-4.css">
+    <link rel="stylesheet" href="assets/css/demos/demo-4.css">
 </head>
 
 <body>
@@ -206,7 +207,7 @@ if (isset($_POST['login'])) {
                                         <div class="form-group">
                                             <label for="register-password">Password *</label>
                                             <input type="password" class="form-control" id="register-password"
-                                                name="register-password" required>
+                                                name="register-password" pattern="[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,64}$" required>
                                         </div><!-- End .form-group -->
 
                                         <div class="form-footer">
