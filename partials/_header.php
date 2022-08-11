@@ -35,7 +35,7 @@
                             <i class="icon-bars"></i>
                         </button>
                         
-                        <a href="index.html" class="logo">
+                        <a href="index.php" class="logo">
                             <img src="assets/images/demos/demo-4/logo.png" alt="Molla Logo" width="105" height="25">
                         </a>
                     </div><!-- End .header-left -->
@@ -56,16 +56,15 @@
                     <div class="header-right">
                         <?php if(isset($_SESSION['loggedin'])): ?>
                         <div class="dashboard wishlist">
-                            <a href="dashboard.html" title="Dashboard">
+                            <a href="dashboard.php" title="Dashboard">
                                 <div class="icon">
                                     <i class="icon-user"></i>
                                 </div>
                                 <p>Account</p>
                             </a>
                         </div>
-                        <?php endif; ?>
                         <div class="wishlist">
-                            <a href="wishlist.html" title="Wishlist">
+                            <a href="wishlist.php" title="Wishlist">
                                 <div class="icon">
                                     <i class="icon-heart-o"></i>
                                     <span class="wishlist-count badge">3</span>
@@ -75,7 +74,7 @@
                         </div>
 
                         <div class="wishlist">
-                            <a href="wishlist.html" title="Cart">
+                            <a href="cart.php" title="Cart">
                                 <div class="icon">
                                     <i class="icon-shopping-cart"></i>
                                     <span class="wishlist-count badge">3</span>
@@ -83,6 +82,7 @@
                                 <p>Cart</p>
                             </a>
                         </div>
+                        <?php endif; ?>
                     </div><!-- End .header-right -->
                 </div><!-- End .container -->
             </div><!-- End .header-middle -->
@@ -140,3 +140,5 @@
                 </div><!-- End .container -->
             </div><!-- End .header-bottom -->
         </header><!-- End .header -->
+
+    
