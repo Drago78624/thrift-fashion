@@ -10,9 +10,15 @@
                         <ul class="top-menu">
                             <li>
                                 <a href="#">Actions</a>
-                                <ul>
-                                    <li><a href="login.php">Login / Register</a></li>
-                                </ul>
+                                <?php if(isset($_SESSION['loggedin'])): ?>
+                                    <ul>
+                                        <li><a href="logout.php">Logout</a></li>
+                                    </ul>
+                                <?php else: ?>
+                                    <ul>
+                                        <li><a href="login.php">Login / Register</a></li>
+                                    </ul>
+                                <?php endif; ?>
                             </li>
                         </ul><!-- End .top-menu -->
                     </div><!-- End .header-right -->
@@ -48,16 +54,16 @@
                     </div>
 
                     <div class="header-right">
-
+                        <?php if(isset($_SESSION['loggedin'])): ?>
                         <div class="dashboard wishlist">
                             <a href="dashboard.html" title="Dashboard">
                                 <div class="icon">
                                     <i class="icon-user"></i>
                                 </div>
-                                <p>Wishlist</p>
+                                <p>Account</p>
                             </a>
                         </div>
-
+                        <?php endif; ?>
                         <div class="wishlist">
                             <a href="wishlist.html" title="Wishlist">
                                 <div class="icon">
