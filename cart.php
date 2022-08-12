@@ -24,6 +24,12 @@
 		$showCart = true;
 		$cartRow = mysqli_fetch_all($cartResult, MYSQLI_ASSOC);
 		// print_r($ordersRow);
+        $stmt =  $mysqli->prepare("SELECT SUM(cart_price) FROM cart WHERE user_id = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $totalResult = $stmt->get_result();
+        $total = mysqli_fetch_assoc($totalResult);
+        // print_r($total["SUM(cart_price)"]);
 	}
 ?>
 
@@ -120,7 +126,7 @@
                                                     <input type="number" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
                                                 </div><!-- End .cart-product-quantity -->
                                             </td>
-											<td class="total-col">$84.00</td>
+											<td class="total-col">$99</td>
                                             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
                                                 <input type="hidden" name="cart-id" value="<?php echo htmlspecialchars($cartItem['cart_id'])?>">
 											<td class="remove-col"><button name="delete" value="deleted" class="btn-remove"><i class="icon-close"></i></button></td>
@@ -139,7 +145,7 @@
 	                					<tbody>
 	                						<tr class="summary-subtotal">
 	                							<td>Subtotal:</td>
-	                							<td>$160.00</td>
+	                							<td>$<?php echo htmlspecialchars($total["SUM(cart_price)"])?></td>
 	                						</tr><!-- End .summary-subtotal -->
 	                						<tr class="summary-shipping">
 	                							<td>Shipping:</td>
@@ -155,7 +161,7 @@
 
 	                						<tr class="summary-total">
 	                							<td>Total:</td>
-	                							<td>$160.00</td>
+	                							<td>$<?php echo htmlspecialchars($total["SUM(cart_price)"]) + 20.00?></td>
 	                						</tr><!-- End .summary-total -->
 	                					</tbody>
 	                				</table><!-- End .table table-summary -->
