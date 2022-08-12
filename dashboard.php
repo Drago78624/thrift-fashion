@@ -145,7 +145,7 @@
 										</h3><!-- End .product-title -->
 									</div><!-- End .product -->
 								</td>
-								<td class="price-col"><?php echo htmlspecialchars($order['order_price']) ?></td>
+								<td class="price-col">$<?php echo htmlspecialchars($order['order_price']) ?></td>
 								<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
 									<input type="hidden" name="orderId" value="<?php echo htmlspecialchars($order['order_id'])?>">
 									<td class="remove-col"><button type="submit" name="delete" value="deleted" class="btn-remove"><i class="icon-close"></i></button></td>

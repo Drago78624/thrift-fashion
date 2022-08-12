@@ -22,8 +22,6 @@
 	            				<ul class="widget-list">
 	            					<li><a href="index.php">Home</a></li>
 	            					<li><a href="category.php">Products</a></li>
-	            					<li><a href="about.php">About Thrift Fashion</a></li>
-	            					<li><a href="faq.php">FAQ</a></li>
 	            					<li><a href="contact.php">Contact us</a></li>
 	            				</ul><!-- End .widget-list -->
 	            			</div><!-- End .widget -->

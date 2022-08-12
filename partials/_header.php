@@ -125,9 +125,6 @@
                                     <a href="category.php">Shop</a>
                                 </li>
                                 <li>
-                                    <a href="about.php">About</a>
-                                </li>
-                                <li>
                                     <a href="contact.php">Contact us</a>
                                 </li>
                             </ul><!-- End .menu -->
