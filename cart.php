@@ -145,7 +145,13 @@
 	                					<tbody>
 	                						<tr class="summary-subtotal">
 	                							<td>Subtotal:</td>
-	                							<td>$<?php echo htmlspecialchars($total["SUM(cart_price)"])?></td>
+	                							<td>$<?php 
+                                                    if(isset($total["SUM(cart_price)"])){
+                                                        echo htmlspecialchars($total["SUM(cart_price)"]);
+                                                    }else {
+                                                        echo 0.00;
+                                                    }
+                                                ?></td>
 	                						</tr><!-- End .summary-subtotal -->
 	                						<tr class="summary-shipping">
 	                							<td>Shipping:</td>
@@ -161,7 +167,13 @@
 
 	                						<tr class="summary-total">
 	                							<td>Total:</td>
-	                							<td>$<?php echo htmlspecialchars($total["SUM(cart_price)"]) + 20.00?></td>
+	                							<td>$<?php 
+                                                    if(isset($total["SUM(cart_price)"])){
+                                                        echo htmlspecialchars($total["SUM(cart_price)"]) + 20.00;
+                                                    }else {
+                                                        echo 0.00;
+                                                    }
+                                                ?></td>
 	                						</tr><!-- End .summary-total -->
 	                					</tbody>
 	                				</table><!-- End .table table-summary -->

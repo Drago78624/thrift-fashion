@@ -302,11 +302,11 @@
                                         </form>
                                     </div><!-- End .product-action -->
 
+                                    <form  action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="POST">
                                     <div class="product-action">
-                                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="POST">
-                                        <button type="submit" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></button>
-                                    </form>
+                                        <button tyle="border: none;" type="submit" class="btn-product btn-cart border-0" title="Add to cart"><span>add to cart</span></button>
                                     </div><!-- End .product-action -->
+                                </form>
                                 </figure><!-- End .product-media -->
 
                                 <div class="product-body">
