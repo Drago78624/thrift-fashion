@@ -1,4 +1,40 @@
-<?php session_start()?>
+<?php
+require "partials/_connection.php";
+
+$feedbackName = $feedbackEmail = $feedbackMessage = "";
+$showAlert = false;
+
+if (isset($_POST['feedback-submit'])) {
+    function test_input($data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
+    $feedbackName = test_input($_POST['feedback-name']);
+    $feedbackEmail = test_input($_POST['feedback-email']);
+    $feedbackMessage = test_input($_POST['feedback-message']);
+
+	$stmt = $mysqli->prepare("INSERT INTO `feedback` (`feedback_name`, `feedback_email`, `feedback_message`) VALUES (?, ?, ?);");
+	$stmt->bind_param("sss", $feedbackName, $feedbackEmail, $feedbackMessage);
+	$stmt->execute();
+	$signupResult = $stmt->get_result();
+
+	$stmt = $mysqli->prepare("SELECT * FROM `feedback` WHERE feedback_email = ?");
+	$stmt->bind_param("s", $feedbackEmail);
+	$stmt->execute();
+	$signupResult = $stmt->get_result();
+
+	if($signupResult){
+		$showAlert = true;
+	}
+
+    $feedbackName = $feedbackEmail = $feedbackMessage = "";
+    
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +72,13 @@
 <body>
     <div class="page-wrapper">
         <?php require "partials/_header.php" ?>
-
+		<?php if($showAlert): ?>
+            <div class="container">
+                <div class="alert alert-success">
+                    <strong>Success!</strong> You message has been sent
+                </div>
+            </div>
+        <?php endif; ?>
         <main class="main">
             <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
                 <div class="container">
@@ -102,35 +144,23 @@
                 			<h2 class="title mb-1">Make Query / Provide Feedback</h2><!-- End .title mb-2 -->
                 			<p class="mb-2">Use the form below to get in touch with the sales team</p>
 
-                			<form action="#" class="contact-form mb-3">
+                			<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" class="contact-form mb-3">
                 				<div class="row">
                 					<div class="col-sm-6">
                                         <label for="cname" class="sr-only">Name</label>
-                						<input type="text" class="form-control" id="cname" placeholder="Name *" required>
+                						<input type="text" name="feedback-name" class="form-control" id="cname" placeholder="Name *" required>
                 					</div><!-- End .col-sm-6 -->
 
                 					<div class="col-sm-6">
                                         <label for="cemail" class="sr-only">Email</label>
-                						<input type="email" class="form-control" id="cemail" placeholder="Email *" required>
-                					</div><!-- End .col-sm-6 -->
-                				</div><!-- End .row -->
-
-                				<div class="row">
-                					<div class="col-sm-6">
-                                        <label for="cphone" class="sr-only">Phone</label>
-                						<input type="tel" class="form-control" id="cphone" placeholder="Phone">
-                					</div><!-- End .col-sm-6 -->
-
-                					<div class="col-sm-6">
-                                        <label for="csubject" class="sr-only">Subject</label>
-                						<input type="text" class="form-control" id="csubject" placeholder="Subject">
+                						<input type="email"  name="feedback-email" class="form-control" id="cemail" placeholder="Email *" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
                 					</div><!-- End .col-sm-6 -->
                 				</div><!-- End .row -->
 
                                 <label for="cmessage" class="sr-only">Message</label>
-                				<textarea class="form-control" cols="30" rows="4" id="cmessage" required placeholder="Message *"></textarea>
+                				<textarea class="form-control" name="feedback-message" cols="30" rows="4" id="cmessage" required placeholder="Message *"></textarea>
 
-                				<button type="submit" class="btn btn-outline-primary-2 btn-minwidth-sm">
+                				<button type="submit" name="feedback-submit" class="btn btn-outline-primary-2 btn-minwidth-sm">
                 					<span>SUBMIT</span>
             						<i class="icon-long-arrow-right"></i>
                 				</button>
