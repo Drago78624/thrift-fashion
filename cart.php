@@ -42,7 +42,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Molla - Bootstrap eCommerce Template</title>
+    <title>Thrift Fashion - Cart</title>
     <meta name="keywords" content="HTML5 Template">
     <meta name="description" content="Molla - Bootstrap eCommerce Template">
     <meta name="author" content="p-themes">
@@ -98,8 +98,6 @@
 										<tr>
 											<th>Product</th>
 											<th>Price</th>
-											<th>Quantity</th>
-											<th>Total</th>
 											<th></th>
 										</tr>
 									</thead>
@@ -120,13 +118,7 @@
 													</h3><!-- End .product-title -->
 												</div><!-- End .product -->
 											</td>
-											<td class="price-col"><?php echo htmlspecialchars($cartItem['cart_price'])?></td>
-											<td class="quantity-col">
-                                                <div class="cart-product-quantity">
-                                                    <input type="number" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
-                                                </div><!-- End .cart-product-quantity -->
-                                            </td>
-											<td class="total-col">$99</td>
+											<td class="price-col text-primary">$<?php echo htmlspecialchars($cartItem['cart_price'])?></td>
                                             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
                                                 <input type="hidden" name="cart-id" value="<?php echo htmlspecialchars($cartItem['cart_id'])?>">
 											<td class="remove-col"><button name="delete" value="deleted" class="btn-remove"><i class="icon-close"></i></button></td>
