@@ -1,3 +1,15 @@
+<?php 
+
+    $stmt = $mysqli->prepare("SELECT COUNT(wishlist_id) FROM wishlist;");
+    $stmt->execute();
+    $wishlistCountResult = $stmt->get_result();
+    $wishlistCount = mysqli_fetch_array($wishlistCountResult);
+
+    $stmt = $mysqli->prepare("SELECT COUNT(cart_id) FROM cart;");
+    $stmt->execute();
+    $cartCountResult = $stmt->get_result();
+    $cartCount = mysqli_fetch_array($cartCountResult);
+?>
 <header class="header header-intro-clearance header-4">
             <div class="header-top">
                 <div class="container">
@@ -36,7 +48,7 @@
                         </button>
                         
                         <a href="index.php" class="logo">
-                            <img src="assets/images/demos/demo-4/logo.png" alt="Molla Logo" width="105" height="25">
+                            <h3 class="text-primary">Thrift Fashion</h3>
                         </a>
                     </div><!-- End .header-left -->
 
@@ -67,7 +79,7 @@
                             <a href="wishlist.php" title="Wishlist">
                                 <div class="icon">
                                     <i class="icon-heart-o"></i>
-                                    <span class="wishlist-count badge">3</span>
+                                    <span class="wishlist-count badge"><?php echo htmlspecialchars($wishlistCount[0]) ?></span>
                                 </div>
                                 <p>Wishlist</p>
                             </a>
@@ -77,7 +89,7 @@
                             <a href="cart.php" title="Cart">
                                 <div class="icon">
                                     <i class="icon-shopping-cart"></i>
-                                    <span class="wishlist-count badge">3</span>
+                                    <span class="wishlist-count badge"><?php echo htmlspecialchars($cartCount[0]) ?></span>
                                 </div>
                                 <p>Cart</p>
                             </a>

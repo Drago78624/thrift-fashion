@@ -3,6 +3,8 @@
 
     require "partials/_connection.php";
 
+    $userId = $_SESSION['user_id'];
+
     $stmt = $mysqli->prepare("SELECT * FROM `products` LIMIT 8");
     $stmt->execute();
     $productsResult = $stmt->get_result();
@@ -17,6 +19,40 @@
     $num = mysqli_num_rows($categoriesResult);
     if($num){
         $categoriesArr = mysqli_fetch_all($categoriesResult, MYSQLI_ASSOC);
+    }
+
+    if(isset($_POST['add-to-wishlist'])){
+        $productId = $_POST['product-id'];
+        $stmt = $mysqli->prepare("SELECT * FROM `products` WHERE id = ?");
+        $stmt->bind_param("i", $productId);
+        $stmt->execute();
+        $productResult = $stmt->get_result();
+        $productArr = mysqli_fetch_assoc($productResult);
+        $productName = $productArr['name'];
+        $productPrice = $productArr['price'];
+        $productQuantity = $productArr['quantity'];
+
+        $stmt = $mysqli->prepare("INSERT INTO `wishlist` (`wishlist_img`, `wishlist_name`, `wishlist_price`, `wishlist_stock`, `user_id`) VALUES ('img', ?, ?, ?, ?);");
+        $stmt->bind_param("sdii", $productName, $productPrice, $productQuantity, $userId);
+        $stmt->execute();
+        $productResult = $stmt->get_result();
+    }
+
+    if(isset($_POST['add-to-cart'])){
+        $productId = $_POST['product-id'];
+        $stmt = $mysqli->prepare("SELECT * FROM `products` WHERE id = ?");
+        $stmt->bind_param("i", $productId);
+        $stmt->execute();
+        $productResult = $stmt->get_result();
+        $productArr = mysqli_fetch_assoc($productResult);
+        $productName = $productArr['name'];
+        $productPrice = $productArr['price'];
+
+        $stmt = $mysqli->prepare("INSERT INTO `cart` (`cart_img`, `cart_name`, `cart_price`, `user_id`) VALUES ('img', ?, ?, ?);");
+        $stmt->bind_param("sdi", $productName, $productPrice, $userId);
+        $stmt->execute();
+        $productResult = $stmt->get_result();
+
     }
 ?>
 <!DOCTYPE html>
@@ -88,7 +124,7 @@
                                         </span>
                                     </div><!-- End .intro-price -->
 
-                                    <a href="category.html" class="btn btn-primary btn-round">
+                                    <a href="category.php" class="btn btn-primary btn-round">
                                         <span>Shop More</span>
                                         <i class="icon-long-arrow-right"></i>
                                     </a>
@@ -111,7 +147,7 @@
                                         </span>
                                     </div><!-- End .intro-price -->
 
-                                    <a href="category.html" class="btn btn-primary btn-round">
+                                    <a href="category.php" class="btn btn-primary btn-round">
                                         <span>Shop More</span>
                                         <i class="icon-long-arrow-right"></i>
                                     </a>
@@ -131,7 +167,7 @@
                     <div class="row justify-content-center">
                         <?php foreach($categoriesArr as $categories => $category): ?>
                         <div class="col-6 col-sm-4 col-lg-2">
-                            <a href="category.html" class="cat-block">
+                            <a href="category.php" class="cat-block">
                                 <figure>
                                     <span>
                                         <img src="assets/images/demos/demo-4/cats/1.png" alt="Category image">
@@ -218,11 +254,18 @@
                                     </a>
 
                                     <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
+                                        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
+                                            <input type="hidden" name="product-id" value="<?php echo htmlspecialchars($product['id'])?>">
+                                            <button type="submit" name="add-to-wishlist" value="added-to-wishlist" class="btn-product-icon btn-wishlist" title="Add to wishlist"></button>
+                                        </form>
                                     </div><!-- End .product-action -->
 
                                     <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
+                                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
+                                        <input type="hidden" name="product-id" value="<?php echo htmlspecialchars($product['id'])?>">
+                                        <button type="submit" class="btn-product btn-cart" name="add-to-cart" value="added-to-cart" title="Add to cart"><span>add to cart</span></button>
+                                    </form>
+
                                     </div><!-- End .product-action -->
                                 </figure><!-- End .product-media -->
 

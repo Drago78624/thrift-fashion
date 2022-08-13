@@ -25,6 +25,23 @@
 		$wishlistRow = mysqli_fetch_all($wishlistResult, MYSQLI_ASSOC);
 		// print_r($ordersRow);
 	}
+
+    if(isset($_POST['add-to-cart'])){
+        $productId = $_POST['product-id'];
+        $stmt = $mysqli->prepare("SELECT * FROM `products` WHERE id = ?");
+        $stmt->bind_param("i", $productId);
+        $stmt->execute();
+        $productResult = $stmt->get_result();
+        $productArr = mysqli_fetch_assoc($productResult);
+        $productName = $productArr['name'];
+        $productPrice = $productArr['price'];
+
+        $stmt = $mysqli->prepare("INSERT INTO `cart` (`cart_img`, `cart_name`, `cart_price`, `user_id`) VALUES ('img', ?, ?, ?);");
+        $stmt->bind_param("sdi", $productName, $productPrice, $user_id);
+        $stmt->execute();
+        $productResult = $stmt->get_result();
+
+    }
 ?>
 
 <!DOCTYPE html>
@@ -121,7 +138,19 @@
                                 
                                 <?php if($wishlistItem['wishlist_stock']): ?>
 								<td class="action-col">
-									<button class="btn btn-block btn-outline-primary-2"><i class="icon-cart-plus"></i>Add to Cart</button>
+                                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
+                                        <?php 
+                                            $stmt = $mysqli->prepare("SELECT id FROM `products` WHERE name = ?");
+                                            $stmt->bind_param("s", $wishlistItem['wishlist_name']);
+                                            $stmt->execute();
+                                            $productResult = $stmt->get_result();
+                                            $productArr = mysqli_fetch_assoc($productResult);
+                                            $productId = $productArr['id'];
+                                            
+                                        ?>
+                                        <input type="hidden" name="product-id" value="<?php echo htmlspecialchars($productId)?>">
+                                        <button type="submit" name="add-to-cart" value="added-to-cart" class="btn btn-block btn-outline-primary-2"><i class="icon-cart-plus"></i>Add to Cart</button>
+                                    </form>
 								</td>
                                 <?php else: ?>
                                 <td class="action-col">

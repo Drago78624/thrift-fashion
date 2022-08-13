@@ -147,7 +147,8 @@
 	                							<td>Subtotal:</td>
 	                							<td>$<?php 
                                                     if(isset($total["SUM(cart_price)"])){
-                                                        echo htmlspecialchars($total["SUM(cart_price)"]);
+                                                        // echo htmlspecialchars($total["SUM(cart_price)"]);
+                                                        echo htmlspecialchars(number_format((float)$total["SUM(cart_price)"], 2, '.', ''));
                                                     }else {
                                                         echo 0.00;
                                                     }
@@ -169,7 +170,7 @@
 	                							<td>Total:</td>
 	                							<td>$<?php 
                                                     if(isset($total["SUM(cart_price)"])){
-                                                        echo htmlspecialchars($total["SUM(cart_price)"]) + 20.00;
+                                                        echo htmlspecialchars(number_format((float)$total["SUM(cart_price)"], 2, '.', '')) + 20.00;
                                                     }else {
                                                         echo 0.00;
                                                     }
